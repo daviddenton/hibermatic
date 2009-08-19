@@ -9,6 +9,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Allows several FieldFilters to be grouped and used as a pre-defined search unit. To use:<br/><br/>
+ * <p/>
+ * 1. construct the filter<br/>
+ * 2. add individual FieldFilters<br/>
+ * 3. set paging information<br/>
+ * 4. use to create criteria to pass to hibernate for both result set and total match counts<br/>
+ *
+ * @param <T>
+ */
 public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> implements Serializable, SearchFilter {
     private static final int UNLIMITED_PAGE_SIZE = -1;
     private final Class entityClass;
@@ -17,6 +27,12 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> imple
     private int pageSize;
     private int firstRow;
 
+    /**
+     * A filter with the specified page size for the searchable entity
+     *
+     * @param pageSize
+     * @param entityClass
+     */
     protected AbstractSearchFilter(int pageSize, Class entityClass) {
         this.entityClass = entityClass;
         this.firstRow = 0;
@@ -24,6 +40,11 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> imple
         this.filtersMap = new HashMap<Object, FieldFilter>();
     }
 
+    /**
+     * A filter with unlimited page size for the searchable entity
+     *
+     * @param entityClass
+     */
     protected AbstractSearchFilter(Class entityClass) {
         this(UNLIMITED_PAGE_SIZE, entityClass);
     }
@@ -37,10 +58,16 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> imple
         this.firstRow = firstRow;
     }
 
+    /**
+     * @return the first row number of the resultset to return
+     */
     public int getFirstRow() {
         return firstRow;
     }
 
+    /**
+     * @return the configured page size. -1 for unlimited page size
+     */
     public int getPageSize() {
         return pageSize;
     }
@@ -120,6 +147,13 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> imple
         return criteria;
     }
 
+    /**
+     * Creates a an DetachedCriteria for the desired entity class with all criterion's for the individual FieldFilters applied, but also adds
+     * a projection to count the total number of results (irrespective of page size). This is especially useful for determining the number of pages
+     * in a particular result set.
+     *
+     * @return Modified DetachedCriteria object with the results set to be a total row count of all matching entities.
+     */
     public DetachedCriteria toCountCriteria() {
         return toCriteria().setProjection(Projections.rowCount());
     }

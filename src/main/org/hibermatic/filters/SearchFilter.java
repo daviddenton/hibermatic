@@ -3,7 +3,7 @@ package org.hibermatic.filters;
 import org.hibernate.criterion.DetachedCriteria;
 
 /**
- *
+ * General interface for all Search Filter implementations.
  */
 public interface SearchFilter {
 
