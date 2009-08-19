@@ -1,6 +1,5 @@
 package org.hibermatic.filters;
 
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import static org.hibernate.criterion.HibernateCriteriaManipulation.ensureJoinTypeFromAssociation;
@@ -10,7 +9,7 @@ import static org.hibernate.criterion.HibernateCriteriaManipulation.ensureJoinTy
  */
 public abstract class AbstractFieldFilter implements FieldFilter {
     private final String associationPath;
-    private int joinType;
+    private JoinType joinType;
     private Criterion expression;
 
     /**
@@ -19,7 +18,7 @@ public abstract class AbstractFieldFilter implements FieldFilter {
      * @param associationPath
      */
     public AbstractFieldFilter(String associationPath) {
-        this(associationPath, CriteriaSpecification.LEFT_JOIN);
+        this(associationPath, HibernateJoinTypeMapping.LEFT_JOIN);
     }
 
     /**
@@ -28,9 +27,19 @@ public abstract class AbstractFieldFilter implements FieldFilter {
      * @param associationPath
      * @param joinType
      */
-    protected AbstractFieldFilter(String associationPath, int joinType) {
+    protected AbstractFieldFilter(String associationPath, JoinType joinType) {
         this.associationPath = associationPath;
         this.joinType = joinType;
+    }
+
+    /**
+     * Overrides the join type used for this FieldFilter if this is a join relationship.
+     * @param joinType
+     * @return
+     */
+    public FieldFilter withJoinType(JoinType joinType) {
+        this.joinType = joinType;
+        return this;
     }
 
     /**
@@ -72,7 +81,7 @@ public abstract class AbstractFieldFilter implements FieldFilter {
         return fieldFilterName.split("\\.");
     }
 
-    protected int getJoinType() {
+    protected JoinType getJoinType() {
         return joinType;
     }
 }

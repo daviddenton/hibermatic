@@ -13,7 +13,7 @@ public class NumberFieldFilter extends AbstractFieldFilter {
         super(associationPath);
     }
 
-    public NumberFieldFilter(String associationPath, int joinType) {
+    public NumberFieldFilter(String associationPath, HibernateJoinTypeMapping joinType) {
         super(associationPath, joinType);
     }
 

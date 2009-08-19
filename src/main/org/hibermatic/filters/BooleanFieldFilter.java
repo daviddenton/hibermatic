@@ -11,7 +11,7 @@ public class BooleanFieldFilter extends AbstractFieldFilter {
         super(associationPath);
     }
 
-    public BooleanFieldFilter(String associationPath, int joinType) {
+    public BooleanFieldFilter(String associationPath, HibernateJoinTypeMapping joinType) {
         super(associationPath, joinType);
     }
 

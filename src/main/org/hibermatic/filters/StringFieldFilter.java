@@ -11,7 +11,7 @@ public class StringFieldFilter extends AbstractFieldFilter {
         super(associationPath);
     }
 
-    public StringFieldFilter(String associationPath, int joinType) {
+    public StringFieldFilter(String associationPath, HibernateJoinTypeMapping joinType) {
         super(associationPath, joinType);
     }
 

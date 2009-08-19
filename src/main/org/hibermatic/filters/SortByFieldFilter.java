@@ -1,6 +1,5 @@
 package org.hibermatic.filters;
 
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.HibernateCriteriaManipulation;
 import org.hibernate.criterion.Order;
@@ -13,10 +12,10 @@ public class SortByFieldFilter extends AbstractFieldFilter {
     private Boolean ascending;
 
     public SortByFieldFilter(String associationPath) {
-        super(associationPath, CriteriaSpecification.LEFT_JOIN);
+        super(associationPath, HibernateJoinTypeMapping.LEFT_JOIN);
     }
 
-    public SortByFieldFilter(String associationPath, int joinType) {
+    public SortByFieldFilter(String associationPath, JoinType joinType) {
         super(associationPath, joinType);
     }
 

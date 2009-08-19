@@ -14,7 +14,7 @@ public class DateFieldFilter extends AbstractFieldFilter {
         super(associationPath);
     }
 
-    public DateFieldFilter(String associationPath, int joinType) {
+    public DateFieldFilter(String associationPath, HibernateJoinTypeMapping joinType) {
         super(associationPath, joinType);
     }
 

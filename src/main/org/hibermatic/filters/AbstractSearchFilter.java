@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> implements Serializable, SearchFilter<B> {
+public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> implements Serializable, SearchFilter {
     private static final int UNLIMITED_PAGE_SIZE = -1;
     private final Class entityClass;
     private final Map<Object, FieldFilter> filtersMap;

@@ -11,7 +11,7 @@ public class EntityFieldFilter extends AbstractFieldFilter {
         super(associationPath);
     }
 
-    public EntityFieldFilter(String associationPath, int joinType) {
+    public EntityFieldFilter(String associationPath, HibernateJoinTypeMapping joinType) {
         super(associationPath, joinType);
     }
 

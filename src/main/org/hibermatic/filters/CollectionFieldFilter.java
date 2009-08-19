@@ -13,7 +13,7 @@ public class CollectionFieldFilter extends AbstractFieldFilter {
         super(associationPath);
     }
 
-    public CollectionFieldFilter(String associationPath, int joinType) {
+    public CollectionFieldFilter(String associationPath, HibernateJoinTypeMapping joinType) {
         super(associationPath, joinType);
     }
 

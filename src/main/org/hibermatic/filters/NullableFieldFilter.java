@@ -10,7 +10,7 @@ public class NullableFieldFilter extends AbstractFieldFilter {
         super(associationPath);
     }
 
-    public NullableFieldFilter(String associationPath, int joinType) {
+    public NullableFieldFilter(String associationPath, HibernateJoinTypeMapping joinType) {
         super(associationPath, joinType);
     }
 
