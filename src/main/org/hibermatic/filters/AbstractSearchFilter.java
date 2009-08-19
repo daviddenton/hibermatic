@@ -34,7 +34,7 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> im
      * @param pageSize
      * @param entityClass
      */
-    protected AbstractSearchFilter(int pageSize, Class<? extends B> entityClass) {
+    protected AbstractSearchFilter(int pageSize, Class entityClass) {
         this.entityClass = entityClass;
         this.firstRow = 0;
         this.pageSize = pageSize;
@@ -46,7 +46,7 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> im
      *
      * @param entityClass
      */
-    protected AbstractSearchFilter(Class<? extends B> entityClass) {
+    protected AbstractSearchFilter(Class entityClass) {
         this(UNLIMITED_PAGE_SIZE, entityClass);
     }
 
