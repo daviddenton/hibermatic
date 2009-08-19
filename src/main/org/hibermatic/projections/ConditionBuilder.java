@@ -3,6 +3,9 @@ package org.hibermatic.projections;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.CriteriaQuery;
 
+/**
+ * Provides a DSL around projection condition construction. For use with ProjectionBuilders
+ */
 public class ConditionBuilder {
     private final ConditionClause firstClause;
 
@@ -10,6 +13,11 @@ public class ConditionBuilder {
         this.firstClause = firstClause;
     }
 
+    /**
+     * Creates a Conditionbuilder for the passed property/association path.
+     * @param propertyName
+     * @return
+     */
     public static ConditionBuilder property(String propertyName) {
         return new ConditionBuilder(new PropertyNameConditionClause(propertyName));
     }
@@ -25,7 +33,6 @@ public class ConditionBuilder {
     public ConditionClause isBefore(ConditionClause secondClause) {
         return isLessThan(secondClause);
     }
-
 
     public ConditionClause isAfterOrOn(ConditionClause secondClause) {
         return isGreaterThanOrEqualTo(secondClause);
@@ -51,13 +58,13 @@ public class ConditionBuilder {
         return new OperatorConditionClause(firstClause, ">=", secondClause);
     }
 
-    public static ConditionClause and(final ConditionClause lower, final ConditionClause upper) {
+    public static ConditionClause and(final ConditionClause first, final ConditionClause second) {
         return new ConditionClause() {
             public String toSqlString(Criteria criteria, CriteriaQuery criteriaQuery) {
                 return new StringBuilder()
-                        .append(lower.toSqlString(criteria, criteriaQuery))
+                        .append(first.toSqlString(criteria, criteriaQuery))
                         .append(" AND ")
-                        .append(upper.toSqlString(criteria, criteriaQuery))
+                        .append(second.toSqlString(criteria, criteriaQuery))
                         .toString();
             }
         };
@@ -96,7 +103,6 @@ public class ConditionBuilder {
             }
         };
     }
-
 
     private static class PropertyNameConditionClause implements ConditionClause {
         private final String propertyName;

@@ -8,25 +8,38 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.SimpleProjection;
 import org.hibernate.type.Type;
 
+/**
+ * Custom Hibernate Projection builders
+ */
 public class ProjectionBuilders {
 
     private ProjectionBuilders() {
     }
 
+    /**
+     * Counts all rows when the condition clause is true.
+     * @param conditionClause
+     * @return
+     */
     public static Projection countWhen(ConditionClause conditionClause) {
-        return new CustomProjection("SUM", conditionClause);
+        return new CaseWhenProjection("SUM", conditionClause);
     }
 
+    /**
+     * Results in value of "1" or "0" depending on the condition clause
+     * @param conditionClause
+     * @return
+     */
     public static Projection when(ConditionClause conditionClause) {
-        return new CustomProjection("", conditionClause);
+        return new CaseWhenProjection("", conditionClause);
     }
 
-    private static class CustomProjection extends SimpleProjection {
+    private static class CaseWhenProjection extends SimpleProjection {
 
         private final ConditionClause clause;
         private final String function;
 
-        public CustomProjection(String function, ConditionClause clause) {
+        public CaseWhenProjection(String function, ConditionClause clause) {
             this.clause = clause;
             this.function = function;
         }
