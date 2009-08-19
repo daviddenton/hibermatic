@@ -15,6 +15,14 @@ public class BooleanFieldFilter extends AbstractFieldFilter {
         super(associationPath, joinType);
     }
 
+    public FieldFilter isTrue() {
+        return is(true);
+    }
+
+    public FieldFilter isFalse() {
+        return is(false);
+    }
+
     public FieldFilter is(boolean fieldValue) {
         setExpression(Restrictions.eq(getPropertyName(), fieldValue));
         return this;
