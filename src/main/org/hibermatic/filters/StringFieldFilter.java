@@ -1,6 +1,5 @@
 package org.hibermatic.filters;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.Restrictions;
 
 public class StringFieldFilter extends AbstractFieldFilter {
@@ -38,7 +37,7 @@ public class StringFieldFilter extends AbstractFieldFilter {
     }
 
     private boolean isValid(String fieldValue) {
-        return !StringUtils.isEmpty(fieldValue);
+        return fieldValue != null && !"".equals(fieldValue);
     }
 
     public FieldFilter startsWith(String fieldValue) {
