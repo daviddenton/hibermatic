@@ -4,8 +4,9 @@ import org.hibernate.criterion.DetachedCriteria;
 
 /**
  * General interface for all Search Filter implementations.
+ * @param <B> The class of the searchable entity
  */
-public interface SearchFilter {
+public interface SearchFilter<B> {
 
     DetachedCriteria toCriteria();
 

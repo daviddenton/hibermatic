@@ -17,9 +17,10 @@ import java.util.Map;
  * 3. set paging information<br/>
  * 4. use to create criteria to pass to hibernate for both result set and total match counts<br/>
  *
- * @param <T>
+ * @param <T> The class of the subclass
+ * @param <B> The class of the searchable entity
  */
-public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> implements Serializable, SearchFilter {
+public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> implements Serializable, SearchFilter<B> {
     private static final int UNLIMITED_PAGE_SIZE = -1;
     private final Class entityClass;
     private final Map<Object, FieldFilter> filtersMap;
@@ -33,7 +34,7 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> imple
      * @param pageSize
      * @param entityClass
      */
-    protected AbstractSearchFilter(int pageSize, Class entityClass) {
+    protected AbstractSearchFilter(int pageSize, Class<? extends B> entityClass) {
         this.entityClass = entityClass;
         this.firstRow = 0;
         this.pageSize = pageSize;
@@ -45,7 +46,7 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter> imple
      *
      * @param entityClass
      */
-    protected AbstractSearchFilter(Class entityClass) {
+    protected AbstractSearchFilter(Class<? extends B> entityClass) {
         this(UNLIMITED_PAGE_SIZE, entityClass);
     }
 
