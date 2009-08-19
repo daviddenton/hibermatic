@@ -2,12 +2,15 @@ package org.hibermatic.filters;
 
 import org.hibernate.criterion.DetachedCriteria;
 
-import java.util.List;
+import java.util.Collection;
 
+/**
+ * Convienience class for grouping multiple FieldFilters. When applyTo() is called, filters are applied in the order based on the input Collection type.
+ */
 public class CompositeFieldFilter implements FieldFilter {
-    private final List<FieldFilter> filters;
+    private final Collection<FieldFilter> filters;
 
-    public CompositeFieldFilter(List<FieldFilter> filters) {
+    public CompositeFieldFilter(Collection<FieldFilter> filters) {
         this.filters = filters;
     }
 

@@ -2,6 +2,9 @@ package org.hibermatic.filters;
 
 import java.util.Date;
 
+/**
+ * Preconfigured DateFieldFilter Factories for common search types. See DateFieldFilter for details on each factory method.
+ */
 public abstract class DateSearch {
     public abstract FieldFilter toFilter(String associationPath);
 

@@ -5,30 +5,56 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.HibernateCriteriaManipulation;
 import org.hibernate.criterion.Order;
 
+/**
+ * Filter for adding sort direction for field
+ */
 public class SortByFieldFilter extends AbstractFieldFilter {
-    private boolean ascending;
+
+    private Boolean ascending;
 
     public SortByFieldFilter(String associationPath) {
-        super(associationPath);
+        super(associationPath, CriteriaSpecification.LEFT_JOIN);
     }
 
-    public SortByFieldFilter withDescendingOrder() {
+    public SortByFieldFilter(String associationPath, int joinType) {
+        super(associationPath, joinType);
+    }
+
+    /**
+     * Apply descending sort direction to field
+     *
+     * @return
+     */
+    public FieldFilter withDescendingOrder() {
         return withOrderDirection(false);
     }
 
-    public SortByFieldFilter withAscendingOrder() {
+    /**
+     * Apply ascending sort direction to field
+     *
+     * @return
+     */
+    public FieldFilter withAscendingOrder() {
         return withOrderDirection(true);
     }
 
-    public SortByFieldFilter withOrderDirection(boolean ascending) {
+    /**
+     * Apply custom sort direction to field. Useful when the sort direction is only known at runtime.
+     *
+     * @param ascending
+     * @return
+     */
+    public FieldFilter withOrderDirection(boolean ascending) {
         this.ascending = ascending;
         return this;
     }
 
     @Override
     public void applyTo(DetachedCriteria criteria) {
-        // Ensure alias has been made with nested property so we can apply sorting on it
-        HibernateCriteriaManipulation.ensureJoinTypeFromAssociation(criteria, getAssociationPath(), CriteriaSpecification.LEFT_JOIN);
-        criteria.addOrder(ascending ? Order.asc(getAssociationPath()) : Order.desc(getAssociationPath()));
+        if (ascending != null) {
+            // Ensure alias has been made with nested property so we can apply sorting on it
+            HibernateCriteriaManipulation.ensureJoinTypeFromAssociation(criteria, getAssociationPath(), getJoinType());
+            criteria.addOrder(ascending ? Order.asc(getAssociationPath()) : Order.desc(getAssociationPath()));
+        }
     }
 }
