@@ -96,7 +96,7 @@ public class NumberFieldFilter extends AbstractFieldFilter {
      * @param fieldValue
      * @return
      */
-    public FieldFilter moreThanEqual(Number fieldValue) {
+    public FieldFilter greaterThanEqual(Number fieldValue) {
         if (isValid(fieldValue)) {
             setExpression(Restrictions.ge(getPropertyName(), fieldValue));
         }

@@ -7,7 +7,7 @@ import java.util.Collection;
 /**
  * FieldFilter for collections of objects mapped by Hibernate.
  */
-public class CollectionFieldFilter extends AbstractFieldFilter {
+public class CollectionFieldFilter<T> extends AbstractFieldFilter {
 
     public CollectionFieldFilter(String associationPath) {
         super(associationPath);
@@ -23,7 +23,7 @@ public class CollectionFieldFilter extends AbstractFieldFilter {
      * @param objects
      * @return
      */
-    public FieldFilter in(Collection objects) {
+    public FieldFilter in(Collection<T> objects) {
         if (isValid(objects)) {
             setExpression(Restrictions.in(getPropertyName(), objects));
         }
@@ -36,7 +36,33 @@ public class CollectionFieldFilter extends AbstractFieldFilter {
      * @param objects
      * @return
      */
-    public FieldFilter notIn(Collection objects) {
+    public FieldFilter notIn(Collection<T> objects) {
+        if (isValid(objects)) {
+            setExpression(Restrictions.not(Restrictions.in(getPropertyName(), objects)));
+        }
+        return this;
+    }
+
+    /**
+     * Filters that field belongs to passed Array
+     *
+     * @param objects
+     * @return
+     */
+    public FieldFilter in(T[] objects) {
+        if (isValid(objects)) {
+            setExpression(Restrictions.in(getPropertyName(), objects));
+        }
+        return this;
+    }
+
+    /**
+     * Filters that field does not belong to passed Array
+     *
+     * @param objects
+     * @return
+     */
+    public FieldFilter notIn(T[] objects) {
         if (isValid(objects)) {
             setExpression(Restrictions.not(Restrictions.in(getPropertyName(), objects)));
         }
