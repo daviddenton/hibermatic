@@ -4,12 +4,13 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.HibernateCriteriaManipulation;
 import org.hibernate.criterion.Order;
 
+
 /**
  * Filter for adding sort direction for field
  */
 public class SortByFieldFilter extends AbstractFieldFilter {
 
-    private Boolean ascending;
+    private boolean ascending = true;
 
     public SortByFieldFilter(String associationPath) {
         super(associationPath, HibernateJoinTypeMapping.LEFT_JOIN);
@@ -50,10 +51,8 @@ public class SortByFieldFilter extends AbstractFieldFilter {
 
     @Override
     public void applyTo(DetachedCriteria criteria) {
-        if (ascending != null) {
-            // Ensure alias has been made with nested property so we can apply sorting on it
-            HibernateCriteriaManipulation.ensureJoinTypeFromAssociation(criteria, getAssociationPath(), getJoinType());
-            criteria.addOrder(ascending ? Order.asc(getAssociationPath()) : Order.desc(getAssociationPath()));
-        }
+        // Ensure alias has been made with nested property so we can apply sorting on it
+        HibernateCriteriaManipulation.ensureJoinTypeFromAssociation(criteria, getAssociationPath(), getJoinType());
+        criteria.addOrder(ascending ? Order.asc(getAssociationPath()) : Order.desc(getAssociationPath()));
     }
 }

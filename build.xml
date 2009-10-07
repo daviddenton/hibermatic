@@ -21,6 +21,7 @@
             <zipfileset dir="lib" prefix="lib"/>
             <zipfileset file="build/jars/${artifact}.jar"/>
             <zipfileset dir="src/main" prefix="main"/>
+            <zipfileset file="${basedir}/readme.txt"/>
         </zip>
     </target>
 
