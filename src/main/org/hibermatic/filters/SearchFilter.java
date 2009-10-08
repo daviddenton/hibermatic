@@ -1,6 +1,9 @@
 package org.hibermatic.filters;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.Session;
+
+import java.util.List;
 
 /**
  * General interface for all Search Filter implementations.
@@ -8,15 +11,31 @@ import org.hibernate.criterion.DetachedCriteria;
  */
 public interface SearchFilter<B> {
 
-    DetachedCriteria toCriteria();
+    int getPageSize();
 
-    DetachedCriteria toCountCriteria();
+    PagedSearchResults<B> currentPage(Session session);
 
-    void setPageSize(int pageSize);
+    SearchFilter<B> goToPage(int pageNumber);
+    
+    SearchFilter<B> goToNextPage();
 
-    void goToRow(int firstRow);
+    SearchFilter<B> goToPreviousPage();
+
+    SearchFilter<B> setPageSize(int pageSize);
 
     int getFirstRow();
 
-    int getPageSize();
+    List<B> search(Session session);
+
+    @Deprecated
+    int count(Session session);
+
+    @Deprecated
+    SearchFilter<B> goToRow(int firstRow);
+
+    @Deprecated
+    DetachedCriteria toCriteria();
+
+    @Deprecated
+    DetachedCriteria toCountCriteria();
 }
