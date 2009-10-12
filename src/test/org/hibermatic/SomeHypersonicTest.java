@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 public class SomeHypersonicTest {
 
-
     private InMemoryDatabase database;
 
     @Before
@@ -18,7 +17,7 @@ public class SomeHypersonicTest {
 
     @Test
     public void test() throws Exception {
-        database.getSessionFactory().getCurrentSession().save(new Domain.A());
+        database.getSessionFactory().getCurrentSession().save(new A());
     }
 
     @After
