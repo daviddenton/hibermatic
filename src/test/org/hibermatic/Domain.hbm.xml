@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+    <class name="org.hibermatic.Domain.A" table="TABLE_A">
+        <id column="AID" name="aid"/>
+        <property column="NAME" name="name"/>
+        <set name="b">
+            <key column="AID" not-null="true"/>
+            <one-to-many class="org.hibermatic.Domain.B"/>
+        </set>
+        <many-to-one name="c" cascade="all">
+
+        </many-to-one>
+    </class>
+
+    <class name="org.hibermatic.Domain.B" table="TABLE_B">
+        <id column="BID" name="bid"/>
+    </class>
+
+    <class name="org.hibermatic.Domain.C" table="TABLE_C">
+        <id column="CID" name="cid"/>
+    </class>
+    
+</hibernate-mapping>
