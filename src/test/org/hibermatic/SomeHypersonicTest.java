@@ -17,7 +17,7 @@ public class SomeHypersonicTest {
 
     @Test
     public void test() throws Exception {
-        database.getSessionFactory().getCurrentSession().save(new Domain.A());
+        database.getSessionFactory().getCurrentSession().save(new A());
     }
 
     @After

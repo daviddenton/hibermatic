@@ -43,9 +43,6 @@ public class InMemoryDatabase {
                 setProperty("hibernate.cache.provider_class", "org.hibernate.cache.HashtableCacheProvider").
                 setProperty("hibernate.hbm2ddl.auto", "create-drop").
                 setProperty("hibernate.show_sql", "true").
-//                addClass(A.class).
-//                addClass(B.class).
-//                addClass(C.class).
                 configure().
                 buildSessionFactory();
     }
