@@ -1,4 +1,4 @@
-package org.hibermatic;
+package org.hibermatic.test;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

@@ -61,8 +61,8 @@
   <component name="IdProvider" IDEtalkID="AA4A1962B300FF26BDC17DE7A7D5AC5F" />
   <component name="InspectionProjectProfileManager">
     <option name="PROJECT_PROFILE" value="Project Default" />
-    <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
-    <scopes />
+    <option name="USE_PROJECT_PROFILE" value="true" />
+    <version value="1.0" />
     <profiles>
       <profile version="1.0" is_locked="false">
         <option name="myName" value="Project Default" />
@@ -227,16 +227,15 @@
   <component name="ProjectDetails">
     <option name="projectName" value="hibermatic" />
   </component>
-  <component name="ProjectFileVersion" converted="true">
-    <converter id="ror-modules" />
-    <converter id="SelenaRunConfToDiana" />
+  <component name="ProjectDictionaryState">
+    <dictionary name="pomfreni" />
   </component>
   <component name="ProjectKey">
     <option name="state" value="https://hibermatic.googlecode.com/svn/trunk/hibermatic.ipr" />
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$//core.iml" filepath="$PROJECT_DIR$//core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
