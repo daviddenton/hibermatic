@@ -272,36 +272,6 @@
         <entry key="$PROJECT_DIR$">
           <value>
             <SvnBranchConfiguration>
-              <option name="branchMap">
-                <map>
-                  <entry key="https://hibermatic.googlecode.com/svn/branches">
-                    <value>
-                      <list />
-                    </value>
-                  </entry>
-                  <entry key="https://hibermatic.googlecode.com/svn/tags">
-                    <value>
-                      <list>
-                        <SvnBranchItem>
-                          <option name="creationDateMillis" value="1254919740387" />
-                          <option name="revision" value="33" />
-                          <option name="url" value="https://hibermatic.googlecode.com/svn/tags/1.2.0" />
-                        </SvnBranchItem>
-                        <SvnBranchItem>
-                          <option name="creationDateMillis" value="1250700417698" />
-                          <option name="revision" value="30" />
-                          <option name="url" value="https://hibermatic.googlecode.com/svn/tags/1.1.1" />
-                        </SvnBranchItem>
-                        <SvnBranchItem>
-                          <option name="creationDateMillis" value="1250699061341" />
-                          <option name="revision" value="28" />
-                          <option name="url" value="https://hibermatic.googlecode.com/svn/tags/1.1" />
-                        </SvnBranchItem>
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
               <option name="branchUrls">
                 <list>
                   <option value="https://hibermatic.googlecode.com/svn/branches" />

@@ -1,7 +1,7 @@
 package org.hibermatic.filters;
 
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 
 import java.util.List;
 
@@ -12,30 +12,20 @@ import java.util.List;
 public interface SearchFilter<B> {
 
     int getPageSize();
-
     PagedSearchResults<B> currentPage(Session session);
-
     SearchFilter<B> goToPage(int pageNumber);
-    
     SearchFilter<B> goToNextPage();
-
     SearchFilter<B> goToPreviousPage();
-
     SearchFilter<B> setPageSize(int pageSize);
 
     int getFirstRow();
-
     List<B> search(Session session);
-
     @Deprecated
     int count(Session session);
-
     @Deprecated
     SearchFilter<B> goToRow(int firstRow);
-
     @Deprecated
     DetachedCriteria toCriteria();
-
     @Deprecated
     DetachedCriteria toCountCriteria();
 }

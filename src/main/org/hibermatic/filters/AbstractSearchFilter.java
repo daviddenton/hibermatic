@@ -22,68 +22,12 @@ import java.util.Map;
  * @param <T> The class of the subclass
  * @param <B> The class of the searchable entity
  */
-public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> implements Serializable, SearchFilter<B> {
-    private static final int UNLIMITED_PAGE_SIZE = -1;
+public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> implements Serializable {
     private final Class<? extends B> entityClass;
-    private final Map<Object, FieldFilter> filtersMap;
+    private final Map<Object, FieldFilter> filtersMap = new HashMap<Object, FieldFilter>();
 
-    private int pageSize;
-    private int firstRow;
-
-    /**
-     * A filter with the specified page size for the searchable entity
-     *
-     * @param pageSize
-     * @param entityClass
-     */
-    protected AbstractSearchFilter(int pageSize, Class<? extends B> entityClass) {
+    protected AbstractSearchFilter(Class<? extends B> entityClass) {
         this.entityClass = entityClass;
-        this.firstRow = 0;
-        this.pageSize = pageSize;
-        this.filtersMap = new HashMap<Object, FieldFilter>();
-    }
-
-    /**
-     * A filter with unlimited page size for the searchable entity
-     *
-     * @param entityClass
-     */
-    protected AbstractSearchFilter(Class entityClass) {
-        this(UNLIMITED_PAGE_SIZE, entityClass);
-    }
-
-    /**
-     * Sets the first returned row of the resultset. Zero indexed, which is also the minimum.
-     *
-     * @param newFirstRow
-     */
-    public T goToRow(int newFirstRow) {
-        this.firstRow = newFirstRow < 0 ? 0 : newFirstRow;
-        return (T) this;
-    }
-
-    /**
-     * @return the first row number of the resultset to return. Zero indexed.
-     */
-    public int getFirstRow() {
-        return firstRow;
-    }
-
-    /**
-     * @return the configured page size. -1 for unlimited page size
-     */
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    /**
-     * The maximum number of results returned in the dataset.
-     *
-     * @param pageSize
-     */
-    public SearchFilter<B> setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-        return this;
     }
 
     /**
@@ -137,69 +81,16 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> im
     }
 
     /**
-     * Returns the nth page of results using the current set of defined filters. Page numbers start at 1.
-     *
-     * @param pageNumber
-     * @throws IllegalArgumentException if page size is unlimited
-     * @return This filter
-     */
-    public T goToPage(int pageNumber) throws IllegalArgumentException {
-        ensurePagingEnabled();
-        if(pageNumber < 1) pageNumber = 1;
-        goToRow(pageSize * pageNumber);
-        return (T) this;
-    }
-
-    private void ensurePagingEnabled() {
-        if(pageSize == UNLIMITED_PAGE_SIZE)
-            throw new IllegalArgumentException("Can't use paging with unlimited page size");
-    }
-
-    /**
-     * Returns the next page of results using the current set of defined filters.
-     *
-     * @throws IllegalArgumentException if page size is unlimited
-     * @return This filter
-     */
-    public T goToNextPage() {
-        ensurePagingEnabled();
-        return goToRow(firstRow + pageSize);
-    }
-
-    /**
-     * Returns the previous page of results using the current set of defined filters. If already on the first page,
-     * this has no effect.
-     *
-     * @throws IllegalArgumentException if page size is unlimited
-     * @return This filter
-     */
-    public T goToPreviousPage() {
-        ensurePagingEnabled();
-        return goToRow(firstRow - pageSize);
-    }
-
-    /**
-     * Returns the current page of results using the current set of defined filters.
-     *
-     * @param session
-     * @throws IllegalArgumentException if page size is unlimited
-     * @return Page of results of type defined by the entity class.
-     */
-    public PagedSearchResults<B> currentPage(Session session) {
-        ensurePagingEnabled();
-        return new PagedSearchResults<B>(firstRow, pageSize, search(session), count(session));
-    }
-
-    /**
      * Searches using the current set of defined filters and returns the results.
      *
      * @param session
      * @return List of results of type defined by the entity class.
      */
     public List<B> search(Session session) {
-        return toCriteria().getExecutableCriteria(session).setFirstResult(firstRow).setMaxResults(pageSize).list();
+        return getExecutor().search(toCriteria().getExecutableCriteria(session));
     }
 
+    protected abstract SearchExecutor getExecutor();
     /**
      * Irrespective of the set page size, count the number of matches using the current set of defined filters;
      *
@@ -216,8 +107,7 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> im
      * @return Modified DetachedCriteria object
      * @deprecated use the paging or searching methods instead. To be removed in v2
      */
-    @Deprecated
-    public DetachedCriteria toCriteria() {
+    private DetachedCriteria toCriteria() {
         DetachedCriteria criteria = DetachedCriteria.forClass(entityClass);
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
@@ -236,8 +126,7 @@ public abstract class AbstractSearchFilter<T extends AbstractSearchFilter, B> im
      * @return Modified DetachedCriteria object with the results set to be a total row count of all matching entities.
      * @deprecated use the paging or searching methods instead. To be removed in v2
      */
-    @Deprecated
-    public DetachedCriteria toCountCriteria() {
+    private DetachedCriteria toCountCriteria() {
         return toCriteria().setProjection(Projections.rowCount());
     }
 
