@@ -3,13 +3,13 @@ package org.hibermatic.filters;
 import java.util.List;
 
 public class PagedSearchResults<B> {
-    private final int firstRowIndexed;
     private final int pageSize;
     private final List<B> pageOfResults;
     private final int totalResultCount;
+    public final int pageNumber;
 
-    public PagedSearchResults(int firstRowIndexed, int pageSize, List pageOfResults, int totalResultCount) {
-        this.firstRowIndexed = firstRowIndexed;
+    public PagedSearchResults(int pageNumber, int pageSize, List pageOfResults, int totalResultCount) {
+        this.pageNumber = pageNumber;
         this.pageSize = pageSize;
         this.pageOfResults = pageOfResults;
         this.totalResultCount = totalResultCount;
@@ -29,7 +29,7 @@ public class PagedSearchResults<B> {
     }
 
     public int pageNumber() {
-        return 1+ ((firstRowIndexed+1) / pageSize);
+        return pageNumber;
     }
 
     public boolean hasNextPage() {
